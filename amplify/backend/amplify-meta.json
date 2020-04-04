@@ -115,5 +115,12 @@
 			},
 			"lastPushDirHash": "WPR/PrPXGf8g+lAZh5PzTTcbkcw="
 		}
+	},
+	"hosting": {
+		"amplifyhosting": {
+			"service": "amplifyhosting",
+			"type": "cicd",
+			"lastPushTimeStamp": "2020-04-04T20:49:03.992Z"
+		}
 	}
 }
