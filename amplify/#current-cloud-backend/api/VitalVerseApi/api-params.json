@@ -1,0 +1,41 @@
+{
+    "paths": [
+        {
+            "name": "/api",
+            "lambdaFunction": "VitalVerseLambda",
+            "privacy": {
+                "private": true,
+                "auth": [
+                    "/POST",
+                    "/GET",
+                    "/PUT",
+                    "/PATCH",
+                    "/DELETE"
+                ]
+            }
+        }
+    ],
+    "resourceName": "VitalVerseApi",
+    "apiName": "VitalVerseApi",
+    "functionArns": [
+        {
+            "lambdaFunction": "VitalVerseLambda"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 0,
+        "authRoleName": "amplify-vitalversemobile-dev-150436-authRole",
+        "unAuthRoleName": "amplify-vitalversemobile-dev-150436-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "VitalVerseLambda",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

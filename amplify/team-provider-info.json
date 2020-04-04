@@ -1,0 +1,20 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-vitalversemobile-dev-150436-authRole",
+            "UnauthRoleArn": "arn:aws:iam::754830320477:role/amplify-vitalversemobile-dev-150436-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::754830320477:role/amplify-vitalversemobile-dev-150436-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-vitalversemobile-dev-150436-deployment",
+            "UnauthRoleName": "amplify-vitalversemobile-dev-150436-unauthRole",
+            "StackName": "amplify-vitalversemobile-dev-150436",
+            "StackId": "arn:aws:cloudformation:us-east-1:754830320477:stack/amplify-vitalversemobile-dev-150436/83fa8850-76af-11ea-aae4-0a87c278b5b5",
+            "AmplifyAppId": "d305313s8626mr"
+        },
+        "categories": {
+            "auth": {
+                "cognito501d1801": {}
+            }
+        }
+    }
+}

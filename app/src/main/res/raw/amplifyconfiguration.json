@@ -1,0 +1,28 @@
+{
+    "UserAgent": "aws-amplify-cli/2.0",
+    "Version": "1.0",
+    "api": {
+        "plugins": {
+            "awsAPIPlugin": {
+                "VitalVerseApi": {
+                    "endpointType": "REST",
+                    "endpoint": "https://0dv6wnb0kg.execute-api.us-east-1.amazonaws.com/dev",
+                    "region": "us-east-1",
+                    "authorizationType": "AWS_IAM"
+                }
+            }
+        }
+    },
+    "storage": {
+        "plugins": {
+            "awsDynamoDbStoragePlugin": {
+                "partitionKeyName": "UserId",
+                "region": "us-east-1",
+                "arn": "arn:aws:dynamodb:us-east-1:754830320477:table/Users-dev",
+                "streamArn": "arn:aws:dynamodb:us-east-1:754830320477:table/Users-dev/stream/2020-04-04T20:16:26.330",
+                "partitionKeyType": "N",
+                "name": "Users-dev"
+            }
+        }
+    }
+}

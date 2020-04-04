@@ -1,0 +1,119 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "amplify-vitalversemobile-dev-150436-authRole",
+			"UnauthRoleArn": "arn:aws:iam::754830320477:role/amplify-vitalversemobile-dev-150436-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::754830320477:role/amplify-vitalversemobile-dev-150436-authRole",
+			"Region": "us-east-1",
+			"DeploymentBucketName": "amplify-vitalversemobile-dev-150436-deployment",
+			"UnauthRoleName": "amplify-vitalversemobile-dev-150436-unauthRole",
+			"StackName": "amplify-vitalversemobile-dev-150436",
+			"StackId": "arn:aws:cloudformation:us-east-1:754830320477:stack/amplify-vitalversemobile-dev-150436/83fa8850-76af-11ea-aae4-0a87c278b5b5",
+			"AmplifyAppId": "d305313s8626mr"
+		}
+	},
+	"storage": {
+		"VitalVerseDB": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-vitalversemobile-dev-150436-deployment/amplify-cfn-templates/storage/VitalVerseDB-cloudformation-template.json",
+				"logicalId": "storageVitalVerseDB"
+			},
+			"lastPushTimeStamp": "2020-04-04T20:18:49.197Z",
+			"output": {
+				"PartitionKeyName": "UserId",
+				"Region": "us-east-1",
+				"Arn": "arn:aws:dynamodb:us-east-1:754830320477:table/Users-dev",
+				"StreamArn": "arn:aws:dynamodb:us-east-1:754830320477:table/Users-dev/stream/2020-04-04T20:16:26.330",
+				"PartitionKeyType": "N",
+				"Name": "Users-dev"
+			},
+			"lastPushDirHash": "wZC2g/ydqlr8BA2KGhuMHy/BfCw="
+		}
+	},
+	"function": {
+		"VitalVerseLambda": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "VitalVerseDB",
+					"attributes": [
+						"Name",
+						"Arn"
+					],
+					"attributeEnvMap": {
+						"Name": "TABLE_NAME",
+						"Arn": "TABLE_ARN"
+					}
+				}
+			],
+			"lastBuildTimeStamp": "2020-04-04T20:15:57.458Z",
+			"lastPackageTimeStamp": "2020-04-04T20:15:59.349Z",
+			"distZipFilename": "VitalVerseLambda-5177425165646f696e38-build.zip",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-vitalversemobile-dev-150436-deployment/amplify-cfn-templates/function/VitalVerseLambda-cloudformation-template.json",
+				"logicalId": "functionVitalVerseLambda"
+			},
+			"lastPushTimeStamp": "2020-04-04T20:18:49.197Z",
+			"output": {
+				"Region": "us-east-1",
+				"Arn": "arn:aws:lambda:us-east-1:754830320477:function:GetUser-dev",
+				"Name": "GetUser-dev",
+				"LambdaExecutionRole": "vitalversemobileLambdaRolefbfcd98f-dev"
+			},
+			"lastPushDirHash": "YRpqGhH9Q13L/1Wo+B3B8hOXFEQ="
+		}
+	},
+	"auth": {
+		"cognito501d1801": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-vitalversemobile-dev-150436-deployment/amplify-cfn-templates/auth/cognito501d1801-cloudformation-template.yml",
+				"logicalId": "authcognito501d1801"
+			},
+			"lastPushTimeStamp": "2020-04-04T20:18:49.197Z",
+			"output": {
+				"AppClientSecret": "1i31130ri4nr0q513mt3i0gs9j5dmn70hhh8vi5qh2bt1mv8a206",
+				"UserPoolId": "us-east-1_Ujka20CSm",
+				"AppClientIDWeb": "58tk8ho6cdsj3r0a23njv4pa0o",
+				"AppClientID": "5fnis2glg47vn6fto5oojdvgi3",
+				"IdentityPoolId": "us-east-1:0c1f5bd9-46d7-4f71-8043-cb6b353f27d0",
+				"IdentityPoolName": "vitalverse_mobile_identitypool_b5a0a494__dev",
+				"UserPoolName": "vitalverse_mobile_userpool_b5a0a494"
+			},
+			"lastPushDirHash": "nx9KrMkXoLA0rfudDpN2cnYKE70="
+		}
+	},
+	"api": {
+		"VitalVerseApi": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "VitalVerseLambda",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			],
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-vitalversemobile-dev-150436-deployment/amplify-cfn-templates/api/VitalVerseApi-cloudformation-template.json",
+				"logicalId": "apiVitalVerseApi"
+			},
+			"lastPushTimeStamp": "2020-04-04T20:18:49.197Z",
+			"output": {
+				"ApiName": "VitalVerseApi",
+				"RootUrl": "https://0dv6wnb0kg.execute-api.us-east-1.amazonaws.com/dev",
+				"ApiId": "0dv6wnb0kg"
+			},
+			"lastPushDirHash": "WPR/PrPXGf8g+lAZh5PzTTcbkcw="
+		}
+	}
+}
