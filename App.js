@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
 
 const signUpConfig = {
   header: 'Sign Up',
-  hideAllDefaults: false,
+  hideAllDefaults: true,
   defaultCountryCode: '1',
   signUpFields: [
     {
