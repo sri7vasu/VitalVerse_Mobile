@@ -23,6 +23,10 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import Amplify from 'aws-amplify';
+import awsconfig from './aws-exports';
+import { withAuthenticator } from 'aws-amplify-react-native';
+Amplify.configure(awsconfig);
 
 const App: () => React$Node = () => {
   return (
@@ -111,4 +115,35 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+const signUpConfig = {
+  header: 'Sign Up',
+  hideAllDefaults: false,
+  defaultCountryCode: '1',
+  signUpFields: [
+    {
+      label: 'Username',
+      key: 'Username',
+      required: true,
+      displayOrder: 1,
+      type: 'string'
+    },
+    {
+      label: 'Email',
+      key: 'email',
+      required: true,
+      displayOrder: 2,
+      type: 'string'
+    },
+    {
+      label: 'Password',
+      key: 'password',
+      required: true,
+      displayOrder: 3,
+      type: 'password'
+    }
+  ]
+};
+
+// export default App;
+//export default withAuthenticator(App, true);
+export default withAuthenticator(App, { signUpConfig });
