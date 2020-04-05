@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.vitalverse_mobile"
+        applicationId "com.sample"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -1,4 +1,4 @@
-package com.vitalverse_mobile;
+package com.sample;
 
 import com.facebook.react.ReactActivity;
 
