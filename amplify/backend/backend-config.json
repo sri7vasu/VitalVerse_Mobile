@@ -26,12 +26,6 @@
 			]
 		}
 	},
-	"auth": {
-		"cognitodf6dff69": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation"
-		}
-	},
 	"api": {
 		"VitalVerseApi": {
 			"service": "API Gateway",
