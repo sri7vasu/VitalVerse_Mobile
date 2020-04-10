@@ -54,8 +54,11 @@ class App extends React.Component {
           this.setState({ authState: 'signIn', authData: null, authError: data.payload.data });
           break;
         case 'signUp':
-          console.log('user signed up' + data.payload.data.codeDeliveryDetails.Destination);
+          console.log('user signed up' + data.payload.data);
           //TODO Code here to insert into Database
+          break;
+        case 'confirmSignUp':
+          console.log('Confirmed sign up')
           break;
         case 'signOut':
           console.log('user signed out');
@@ -92,22 +95,6 @@ class App extends React.Component {
     });
   }
 
-  //signup
-  // Class method to sign up a user - TODO not working
-  signUp = async () => {
-    try {
-      await Auth.signUp({
-        username, 
-        password, 
-        attributes: { email, phone_number }
-      })
-        .then(user => console.log("signup info:" + user))
-    }
-    catch (err) {
-      console.log('error signing up user...', err)
-    }
-  }
-
   //signout - TODO not working
   signOut() {
     Auth.signOut().then(() => {
@@ -130,6 +117,47 @@ class App extends React.Component {
   }
 };
 
-// Comment this out to get an un autheniticated Apps
-export default withAuthenticator(App, true);
+//signup
+  // Class method to sign up a user - TODO not working
+  signUp = async () => {
+    try {
+      await Auth.signUp({
+        username, 
+        password, 
+        attributes: { email, phone_number }
+      })
+        .then(user => console.log("signup info:" + user))
+    }
+    catch (err) {
+      console.log('error signing up user...', err)
+    }
+  }
+  
+  const signUpConfig = {
+    header: 'My Customized Sign Up',
+    hideAllDefaults: true,
+    signUpFields: [
+      {
+        label: 'Email',
+        key: 'email',
+        required: true,
+        displayOrder: 1,
+        type: 'string'
+      },
+      {
+        label: 'Password',
+        key: 'password',
+        required: true,
+        displayOrder: 2,
+        type: 'password'
+      }
+    ]
+  };
+  
+// Comment this out and uncomment the last line get an un autheniticated Apps
+export default withAuthenticator(App,{
+  signUpConfig,
+  usernameAttributes: 'email',
+  includeGreetings:true}
+)
 //export default App;
