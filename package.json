@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "@react-native-community/netinfo": "^5.7.0",
-    "amazon-cognito-identity-js": "^4.2.0",
-    "aws-amplify": "^3.0.5",
-    "aws-amplify-react-native": "^4.0.2",
+    "amazon-cognito-identity-js": "^4.2.1",
+    "aws-amplify": "^3.0.7",
+    "aws-amplify-react-native": "^4.0.3",
     "react": "16.11.0",
     "react-native": "^0.62.1",
     "react-native-elements": "^1.2.7",

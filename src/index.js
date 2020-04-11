@@ -25,15 +25,16 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 //Auth and Amplify components
-import Amplify from 'aws-amplify';
-import awsconfig from './aws-exports';
-import { withAuthenticator, AmplifyAuthenticator, AmplifySignOut, SignUp } from 'aws-amplify-react-native';
+import Amplify, { API } from 'aws-amplify';
 import { Auth } from 'aws-amplify'
-Amplify.configure(awsconfig);
+import { withAuthenticator } from 'aws-amplify-react-native';
+import awsconfig from './aws-exports';
 
 //Application Components
 import { Vitals } from './screens/Vitals';
 import { AppContainer } from './components/AppContainer';
+
+Amplify.configure(awsconfig);
 
 //For event listening and logging
 import { Hub, Logger } from 'aws-amplify';
@@ -48,14 +49,14 @@ class App extends React.Component {
     Hub.listen('auth', (data) => {
       switch (data.payload.event) {
         case 'signIn':
-          this.setState({ authState: 'signedIn', authData: data.payload.data });
+          //this.setState({ authState: 'signedIn', authData: data.payload.data });
+          console.log('user Signed In');
           break;
         case 'signIn_failure':
           this.setState({ authState: 'signIn', authData: null, authError: data.payload.data });
           break;
         case 'signUp':
-          console.log('user signed up' + data.payload.data);
-          //TODO Code here to insert into Database
+          console.log('user signed up');
           break;
         case 'confirmSignUp':
           console.log('Confirmed sign up')
@@ -77,8 +78,8 @@ class App extends React.Component {
       authState: 'loading',
       authData: null,
       authError: null,
-      email:null,
-      phone_number:null
+      email: null,
+      phone_number: null
     }
   }
 
@@ -86,19 +87,34 @@ class App extends React.Component {
   async componentDidMount() {
     console.log('on component mount');
     // check the current user when the App component is loaded
-    await Auth.currentAuthenticatedUser().then(user => {
-      console.log(user);
-      this.setState({ authState: 'signedIn' });
-    }).catch(e => {
-      console.log(e);
-      this.setState({ authState: 'signIn' });
-    });
+    await Auth.currentAuthenticatedUser()
+      .then(user => {
+        //this.setState({ authState: 'signedIn' });
+
+        //Do API call here to get the user details
+        API.get("VitalVerseAPI",
+          "/getuserdetails/" + user.attributes.sub,
+          {
+            headers: {
+              Authorization: user.signInUserSession.idToken.jwtToken
+            }
+          }).then(res => {
+            console.log(res);
+          }).catch(error => {
+            console.log(error);
+          });
+      }).catch(e => {
+        //this.setState({ authState: 'signedIn' });
+        console.log(e);
+      });
   }
 
-  //signout - TODO not working
+  //use Auth.currentSession() and Auth.currentCredentials() to get current user credentials anywhere
+
+  //signout
   signOut() {
     Auth.signOut().then(() => {
-      this.setState({ authState: 'signIn' });
+      this.setState({ authState: 'signOut' });
     }).catch(e => {
       console.log(e);
     });
@@ -117,47 +133,32 @@ class App extends React.Component {
   }
 };
 
-//signup
-  // Class method to sign up a user - TODO not working
-  signUp = async () => {
-    try {
-      await Auth.signUp({
-        username, 
-        password, 
-        attributes: { email, phone_number }
-      })
-        .then(user => console.log("signup info:" + user))
+const signUpConfig = {
+  header: 'My Customized Sign Up',
+  hideAllDefaults: true,
+  signUpFields: [
+    {
+      label: 'Email',
+      key: 'email',
+      required: true,
+      displayOrder: 1,
+      type: 'string'
+    },
+    {
+      label: 'Password',
+      key: 'password',
+      required: true,
+      displayOrder: 2,
+      type: 'password'
     }
-    catch (err) {
-      console.log('error signing up user...', err)
-    }
-  }
-  
-  const signUpConfig = {
-    header: 'My Customized Sign Up',
-    hideAllDefaults: true,
-    signUpFields: [
-      {
-        label: 'Email',
-        key: 'email',
-        required: true,
-        displayOrder: 1,
-        type: 'string'
-      },
-      {
-        label: 'Password',
-        key: 'password',
-        required: true,
-        displayOrder: 2,
-        type: 'password'
-      }
-    ]
-  };
-  
+  ]
+};
+
 // Comment this out and uncomment the last line get an un autheniticated Apps
-export default withAuthenticator(App,{
+export default withAuthenticator(App, {
   signUpConfig,
   usernameAttributes: 'email',
-  includeGreetings:true}
+  includeGreetings: true
+}
 )
 //export default App;
